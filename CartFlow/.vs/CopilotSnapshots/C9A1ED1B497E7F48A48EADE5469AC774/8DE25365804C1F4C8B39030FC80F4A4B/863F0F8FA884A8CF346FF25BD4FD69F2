@@ -1,0 +1,19 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Text;
+
+namespace CartFlow.Data.Entities {
+    public class CartItem {
+        public int Id { get; set; }
+        public int CartId { get; set; }
+        [ForeignKey(nameof(CartId))]
+        public Cart Cart { get; set; }
+        public int ProdcutId { get; set; }
+        [ForeignKey(nameof(ProdcutId))]
+        public List<Product> Products{ get; set; }
+        public int MyProperty { get; set; }
+        public int Quantity { get; set; }
+        public decimal UnitPrice { get; set; }
+    }
+}
