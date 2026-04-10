@@ -1,0 +1,51 @@
+﻿using CartFlow.Data.Entities;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace CartFlow.Data.Data.Configurations {
+    public class UserConfiguration : IEntityTypeConfiguration<User> {
+        public void Configure(EntityTypeBuilder<User> builder) {
+            builder.HasKey(e => e.Id);
+
+            builder.Property(e => e.FirstName)
+                .HasColumnType("NVARCHAR")
+                .HasMaxLength(50)
+                .IsRequired();
+            
+            builder.Property(e => e.LastName)
+                .HasColumnType("NVARCHAR")
+                .HasMaxLength(50)
+                .IsRequired();
+            
+            builder.Property(e => e.Email)
+                .HasColumnType("NVARCHAR")
+                .HasMaxLength(100)
+                .IsRequired();
+            
+            builder.Property(e => e.Password)
+                .HasColumnType("NVARCHAR")
+                .HasMaxLength(25)
+                .IsRequired();
+            
+            builder.Property(e => e.UserRole)
+                .HasColumnType("NVARCHAR")
+                .HasMaxLength(20)
+                .IsRequired();
+            
+            builder.Property(e => e.Phone)
+                .HasColumnType("NVARCHAR")
+                .HasMaxLength(11)
+                .IsRequired();
+            
+            builder.Property(e => e.Addresses)
+                .HasColumnType("NVARCHAR")
+                .HasMaxLength(100)
+                .IsRequired();
+
+            builder.ToTable("Addresses");
+        }
+    }
+}

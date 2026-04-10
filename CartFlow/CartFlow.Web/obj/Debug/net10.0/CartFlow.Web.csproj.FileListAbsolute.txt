@@ -220,10 +220,10 @@ E:\ecommerce-app\CartFlow\CartFlow.Web\obj\Debug\net10.0\staticwebassets.build.j
 E:\ecommerce-app\CartFlow\CartFlow.Web\obj\Debug\net10.0\staticwebassets.development.json
 E:\ecommerce-app\CartFlow\CartFlow.Web\obj\Debug\net10.0\staticwebassets.build.endpoints.json
 E:\ecommerce-app\CartFlow\CartFlow.Web\obj\Debug\net10.0\swae.build.ex.cache
-E:\ecommerce-app\CartFlow\CartFlow.Web\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt
 E:\ecommerce-app\CartFlow\CartFlow.Web\obj\Debug\net10.0\CartFlow.9D8962FB.Up2Date
 E:\ecommerce-app\CartFlow\CartFlow.Web\obj\Debug\net10.0\CartFlow.Web.dll
 E:\ecommerce-app\CartFlow\CartFlow.Web\obj\Debug\net10.0\refint\CartFlow.Web.dll
 E:\ecommerce-app\CartFlow\CartFlow.Web\obj\Debug\net10.0\CartFlow.Web.pdb
 E:\ecommerce-app\CartFlow\CartFlow.Web\obj\Debug\net10.0\CartFlow.Web.genruntimeconfig.cache
 E:\ecommerce-app\CartFlow\CartFlow.Web\obj\Debug\net10.0\ref\CartFlow.Web.dll
+E:\ecommerce-app\CartFlow\CartFlow.Web\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt
