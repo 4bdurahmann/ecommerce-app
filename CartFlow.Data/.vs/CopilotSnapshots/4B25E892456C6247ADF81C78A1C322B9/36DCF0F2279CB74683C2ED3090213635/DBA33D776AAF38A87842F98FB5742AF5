@@ -1,0 +1,18 @@
+﻿@{
+    ViewData["Title"] = "Privacy Policy";
+}
+
+<div class="policy-page">
+    <section class="page-hero">
+        <div>
+            <span class="page-kicker">Policy</span>
+            <h1>@ViewData["Title"]</h1>
+            <p>Use this page to describe how CartFlow handles user data, cookies, and account information.</p>
+        </div>
+    </section>
+
+    <section class="details-panel">
+        <h2 class="h5 mb-3">Template content</h2>
+        <p>This is a placeholder privacy page. Replace it with your own policy text when you are ready.</p>
+    </section>
+</div>

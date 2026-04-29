@@ -1,0 +1,42 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="home-page">
+    <section class="page-hero">
+        <div>
+            <span class="page-kicker">CartFlow</span>
+            <h1>Modern ecommerce pages with a clean product theme</h1>
+            <p>Start with this layout, then plug in your real data, forms, checkout flow, and admin pages.</p>
+            <div class="hero-actions">
+                <a class="btn btn-primary" asp-controller="Products" asp-action="Index">Browse products</a>
+                <a class="btn btn-outline-primary" asp-controller="Home" asp-action="Privacy">Read policy</a>
+            </div>
+        </div>
+        <div class="hero-stats hero-stats--home">
+            <div>
+                <strong>Razor</strong>
+                <span>Views and controllers</span>
+            </div>
+            <div>
+                <strong>Theme</strong>
+                <span>Bootstrap + custom CSS</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="feature-grid">
+        <article class="feature-card">
+            <h2>Product catalog</h2>
+            <p>Show products in a consistent card layout that is easy to expand later.</p>
+        </article>
+        <article class="feature-card">
+            <h2>Details pages</h2>
+            <p>Use split panels for price, stock, and actions without overwhelming the page.</p>
+        </article>
+        <article class="feature-card">
+            <h2>Ready for forms</h2>
+            <p>The same theme can be reused for create, edit, login, and checkout screens.</p>
+        </article>
+    </section>
+</div>

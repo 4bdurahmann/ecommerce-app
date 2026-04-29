@@ -1,0 +1,31 @@
+@{
+    ViewData["Title"] = "Sign in";
+}
+
+<div class="auth-page">
+    <section class="section-card auth-shell">
+        <div class="auth-copy">
+            <p class="section-label">Account</p>
+            <h1>Sign in</h1>
+            <p class="section-text">Use this page layout as the base for your login screen later.</p>
+        </div>
+
+        <form class="auth-form">
+            <div class="field-grid">
+                <label class="form-field">
+                    <span>Email</span>
+                    <input class="form-control" type="email" placeholder="name@example.com" />
+                </label>
+                <label class="form-field">
+                    <span>Password</span>
+                    <input class="form-control" type="password" placeholder="••••••••" />
+                </label>
+            </div>
+
+            <div class="auth-actions">
+                <button type="button" class="btn btn-primary">Sign in</button>
+                <a class="btn btn-outline-secondary" asp-controller="Home" asp-action="Index">Back home</a>
+            </div>
+        </form>
+    </section>
+</div>

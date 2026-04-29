@@ -1,0 +1,42 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="home-page">
+    <section class="page-hero home-hero">
+        <div>
+            <span class="page-kicker">CartFlow</span>
+            <h1>Build a clean shopping experience.</h1>
+            <p>Modern Razor views, reusable styles, and a simple product flow ready for database-backed features.</p>
+            <div class="hero-actions">
+                <a class="btn btn-primary btn-lg" asp-controller="Products" asp-action="Index">Browse Products</a>
+                <a class="btn btn-outline-primary btn-lg" asp-controller="Home" asp-action="Privacy">Read Privacy</a>
+            </div>
+        </div>
+        <div class="hero-stats hero-stats--home">
+            <div>
+                <strong>Fast</strong>
+                <span>Bootstrap + custom CSS</span>
+            </div>
+            <div>
+                <strong>Simple</strong>
+                <span>Easy to extend later</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="feature-grid">
+        <article class="feature-card">
+            <h2>Product pages</h2>
+            <p>Start with list and details views, then move into create and edit screens.</p>
+        </article>
+        <article class="feature-card">
+            <h2>Shared layout</h2>
+            <p>Keep the same header, footer, and navigation across the whole site.</p>
+        </article>
+        <article class="feature-card">
+            <h2>Ready for data</h2>
+            <p>Swap sample data for `AppDbContext` when you are ready to connect the database.</p>
+        </article>
+    </section>
+</div>

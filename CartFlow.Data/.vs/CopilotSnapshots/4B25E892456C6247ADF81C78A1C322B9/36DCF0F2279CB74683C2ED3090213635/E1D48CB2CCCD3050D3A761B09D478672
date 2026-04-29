@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Product>
+
+@{
+    ViewData["Title"] = "Products";
+}
+
+<div class="page-section">
+    <section class="section-card">
+        <div class="section-header section-header--row">
+            <div>
+                <p class="section-label">Catalog</p>
+                <h1>Products</h1>
+                <p class="section-text">A simple, aligned list view for product browsing and future admin actions.</p>
+            </div>
+            <div class="summary-chip">
+                <strong>@Model.Count()</strong>
+                <span>items</span>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-borderless align-middle products-table mb-0">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th class="text-end">Price</th>
+                        <th class="text-end">Stock</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var product in Model) {
+                    <tr>
+                        <td>
+                            <div class="fw-semibold">@product.Name</div>
+                            <div class="text-muted small text-truncate">@product.Description</div>
+                        </td>
+                        <td>@product.Category?.Name</td>
+                        <td class="text-end">@product.UnitPrice.ToString("C")</td>
+                        <td class="text-end">@product.StockQuantity</td>
+                        <td class="text-end">
+                            <a class="btn btn-sm btn-outline-primary" asp-action="Details" asp-route-id="@product.Id">Details</a>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </section>
+</div>

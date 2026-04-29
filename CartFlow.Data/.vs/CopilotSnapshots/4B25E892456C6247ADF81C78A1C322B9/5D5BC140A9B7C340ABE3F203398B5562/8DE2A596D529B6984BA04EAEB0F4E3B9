@@ -1,0 +1,32 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="page-section">
+    <section class="section-card intro-card">
+        <div class="section-header">
+            <p class="section-label">CartFlow</p>
+            <h1>Professional ecommerce pages</h1>
+            <p class="section-text">A compact Razor layout for products, details, and future checkout screens.</p>
+        </div>
+        <div class="action-row">
+            <a class="btn btn-primary" asp-controller="Products" asp-action="Index">View products</a>
+            <a class="btn btn-outline-secondary" asp-controller="Home" asp-action="Privacy">Privacy policy</a>
+        </div>
+    </section>
+
+    <section class="info-grid">
+        <article class="info-card">
+            <h2>Catalog</h2>
+            <p>Keep product listings aligned and easy to scan.</p>
+        </article>
+        <article class="info-card">
+            <h2>Details</h2>
+            <p>Show the key product fields without visual clutter.</p>
+        </article>
+        <article class="info-card">
+            <h2>Extend</h2>
+            <p>Reuse the same structure for forms and admin pages.</p>
+        </article>
+    </section>
+</div>

@@ -1,0 +1,66 @@
+@model CartViewModel
+
+@{
+    ViewData["Title"] = "Cart";
+}
+
+<div class="page-section">
+    <section class="section-card">
+        <div class="section-header section-header--row">
+            <div>
+                <p class="section-label">Cart</p>
+                <h1>Your shopping cart</h1>
+                <p class="section-text">A compact review screen for the items selected by the customer.</p>
+            </div>
+            <div class="summary-chip summary-chip--price">
+                <strong>@Model.Items.Count</strong>
+                <span>items</span>
+            </div>
+        </div>
+
+        <div class="table-responsive mt-3">
+            <table class="table table-borderless align-middle products-table mb-0">
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Category</th>
+                        <th class="text-end">Price</th>
+                        <th class="text-end">Qty</th>
+                        <th class="text-end">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model.Items) {
+                    <tr>
+                        <td class="fw-semibold">@item.ProductName</td>
+                        <td>@item.CategoryName</td>
+                        <td class="text-end">@item.UnitPrice.ToString("C")</td>
+                        <td class="text-end">@item.Quantity</td>
+                        <td class="text-end">@item.LineTotal.ToString("C")</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+
+        <div class="cart-total mt-3">
+            <div>
+                <span>Subtotal</span>
+                <strong>@Model.Subtotal.ToString("C")</strong>
+            </div>
+            <div>
+                <span>Shipping</span>
+                <strong>@Model.Shipping.ToString("C")</strong>
+            </div>
+            <div>
+                <span>Total</span>
+                <strong>@Model.Total.ToString("C")</strong>
+            </div>
+        </div>
+
+        <div class="action-row mt-3">
+            <a class="btn btn-primary" asp-controller="Checkout" asp-action="Index">Proceed to checkout</a>
+            <a class="btn btn-outline-secondary" asp-controller="Products" asp-action="Index">Continue shopping</a>
+        </div>
+    </section>
+</div>

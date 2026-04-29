@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="CartFlow.Data/CartFlow.Data.csproj" />
+  <Project Path="CartFlow.Web/CartFlow.Web.csproj" />
+</Solution>

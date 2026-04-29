@@ -1,0 +1,46 @@
+﻿@model IEnumerable<Product>
+
+@{
+    ViewData["Title"] = "Products";
+}
+
+<div class="products-page">
+    <section class="page-hero">
+        <div>
+            <span class="page-kicker">Catalog</span>
+            <h1>Explore the CartFlow collection</h1>
+            <p>Clean, simple product cards that are easy to extend when you connect the database.</p>
+        </div>
+        <div class="hero-stats">
+            <div>
+                <strong>@Model.Count()</strong>
+                <span>Products</span>
+            </div>
+            <div>
+                <strong>Modern</strong>
+                <span>Bootstrap UI</span>
+            </div>
+        </div>
+    </section>
+
+    <div class="product-grid">
+        @foreach (var product in Model) {
+            <article class="product-card">
+                <div class="product-card__image">
+                    <span>@product.Category?.Name</span>
+                </div>
+                <div class="product-card__body">
+                    <div class="product-card__header">
+                        <h2>@product.Name</h2>
+                        <span class="price-badge">@product.UnitPrice.ToString("C")</span>
+                    </div>
+                    <p>@product.Description</p>
+                    <div class="product-card__meta">
+                        <span>@product.StockQuantity in stock</span>
+                        <a class="btn btn-primary btn-sm" asp-action="Details" asp-route-id="@product.Id">View details</a>
+                    </div>
+                </div>
+            </article>
+        }
+    </div>
+</div>

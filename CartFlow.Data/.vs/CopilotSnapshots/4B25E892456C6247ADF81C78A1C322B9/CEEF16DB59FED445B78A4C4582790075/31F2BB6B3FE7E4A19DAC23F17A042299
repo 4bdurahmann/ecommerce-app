@@ -1,0 +1,4 @@
+﻿@using CartFlow.Web
+@using CartFlow.Web.Models
+@using CartFlow.Data.Entities
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers

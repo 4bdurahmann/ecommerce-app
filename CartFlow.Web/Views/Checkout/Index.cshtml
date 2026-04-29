@@ -1,0 +1,57 @@
+@model CheckoutViewModel
+
+@{
+    ViewData["Title"] = "Checkout";
+}
+
+<div class="page-section">
+    <section class="section-card">
+        <div class="section-header">
+            <p class="section-label">Checkout</p>
+            <h1>Shipping details</h1>
+            <p class="section-text">A simple checkout form layout that stays compact and easy to scan.</p>
+        </div>
+
+        <form class="checkout-form mt-3">
+            <div class="field-grid field-grid--two">
+                <label class="form-field">
+                    <span>First name</span>
+                    <input class="form-control" type="text" placeholder="First name" />
+                </label>
+                <label class="form-field">
+                    <span>Last name</span>
+                    <input class="form-control" type="text" placeholder="Last name" />
+                </label>
+                <label class="form-field field-span-2">
+                    <span>Email</span>
+                    <input class="form-control" type="email" placeholder="name@example.com" />
+                </label>
+                <label class="form-field field-span-2">
+                    <span>Address</span>
+                    <input class="form-control" type="text" placeholder="Street address" />
+                </label>
+                <label class="form-field">
+                    <span>City</span>
+                    <input class="form-control" type="text" placeholder="City" />
+                </label>
+                <label class="form-field">
+                    <span>State</span>
+                    <input class="form-control" type="text" placeholder="State" />
+                </label>
+                <label class="form-field">
+                    <span>Postal code</span>
+                    <input class="form-control" type="text" placeholder="Postal code" />
+                </label>
+                <label class="form-field">
+                    <span>Country</span>
+                    <input class="form-control" type="text" placeholder="Country" />
+                </label>
+            </div>
+
+            <div class="auth-actions mt-3">
+                <button type="button" class="btn btn-primary">Continue</button>
+                <a class="btn btn-outline-secondary" asp-controller="Cart" asp-action="Index">Back to cart</a>
+            </div>
+        </form>
+    </section>
+</div>

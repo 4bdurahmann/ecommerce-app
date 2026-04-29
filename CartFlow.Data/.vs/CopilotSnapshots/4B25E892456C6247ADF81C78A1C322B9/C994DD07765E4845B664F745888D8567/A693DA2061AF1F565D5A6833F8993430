@@ -1,0 +1,49 @@
+﻿@model Product
+
+@{
+    ViewData["Title"] = "Product Details";
+}
+
+<div class="product-details">
+    <section class="details-hero">
+        <div>
+            <span class="page-kicker">Product</span>
+            <h1>@Model.Name</h1>
+            <p>@Model.Description</p>
+        </div>
+        <div class="details-price">
+            <strong>@Model.UnitPrice.ToString("C")</strong>
+            <span>Current unit price</span>
+        </div>
+    </section>
+
+    <div class="details-grid">
+        <section class="details-panel">
+            <h2 class="h5 mb-3">Overview</h2>
+            <dl class="details-list">
+                <div>
+                    <dt>Category</dt>
+                    <dd>@Model.Category?.Name</dd>
+                </div>
+                <div>
+                    <dt>Stock</dt>
+                    <dd>@Model.StockQuantity</dd>
+                </div>
+                <div>
+                    <dt>Product ID</dt>
+                    <dd>@Model.Id</dd>
+                </div>
+            </dl>
+        </section>
+
+        <section class="details-panel details-panel--accent d-flex flex-column justify-content-between">
+            <div>
+                <h2 class="h5 mb-3">Ready to add this item?</h2>
+                <p>This card is a good spot for your future add-to-cart, edit, or admin actions.</p>
+            </div>
+            <div class="mt-4 d-flex gap-2 flex-wrap">
+                <a class="btn btn-light" asp-action="Index">Back to Products</a>
+            </div>
+        </section>
+    </div>
+</div>

@@ -1,0 +1,48 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="landing-page">
+    <section class="section-card landing-hero">
+        <div class="landing-copy">
+            <p class="section-label">CartFlow</p>
+            <h1>Simple ecommerce pages, built cleanly.</h1>
+            <p class="section-text">A professional starting point for product browsing, account screens, and later checkout flows.</p>
+            <div class="action-row">
+                <a class="btn btn-primary" asp-controller="Products" asp-action="Index">Browse products</a>
+                <a class="btn btn-outline-secondary" asp-controller="Account" asp-action="SignIn">Sign in</a>
+                <a class="btn btn-link px-0" asp-controller="Account" asp-action="SignUp">Create account</a>
+            </div>
+        </div>
+
+        <div class="landing-summary">
+            <div class="summary-chip summary-chip--stacked">
+                <strong>Compact</strong>
+                <span>Aligned cards and forms</span>
+            </div>
+            <div class="summary-chip summary-chip--stacked">
+                <strong>Reusable</strong>
+                <span>Shared layout and styles</span>
+            </div>
+            <div class="summary-chip summary-chip--stacked">
+                <strong>Ready</strong>
+                <span>Easy to extend later</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="info-grid">
+        <article class="info-card">
+            <h2>Products</h2>
+            <p>List items with clean spacing and readable details.</p>
+        </article>
+        <article class="info-card">
+            <h2>Authentication</h2>
+            <p>Static sign in and sign up pages ready for wiring later.</p>
+        </article>
+        <article class="info-card">
+            <h2>Admin ready</h2>
+            <p>Use the same style for forms, dashboard, and management screens.</p>
+        </article>
+    </section>
+</div>

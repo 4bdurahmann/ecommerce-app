@@ -1,0 +1,45 @@
+﻿@model Product
+
+@{
+    ViewData["Title"] = "Product Details";
+}
+
+<div class="product-details">
+    <div class="details-hero">
+        <div>
+            <span class="page-kicker">Product</span>
+            <h1>@Model.Name</h1>
+            <p>@Model.Description</p>
+        </div>
+        <div class="details-price">
+            <span>Price</span>
+            <strong>@Model.UnitPrice.ToString("C")</strong>
+        </div>
+    </div>
+
+    <div class="details-grid">
+        <section class="details-panel">
+            <h2>Overview</h2>
+            <dl class="details-list">
+                <div>
+                    <dt>Category</dt>
+                    <dd>@Model.Category?.Name</dd>
+                </div>
+                <div>
+                    <dt>Stock</dt>
+                    <dd>@Model.StockQuantity</dd>
+                </div>
+                <div>
+                    <dt>Product ID</dt>
+                    <dd>@Model.Id</dd>
+                </div>
+            </dl>
+        </section>
+
+        <aside class="details-panel details-panel--accent">
+            <h2>Action</h2>
+            <p>Use this layout as the base for add-to-cart, edit, and admin pages later.</p>
+            <a class="btn btn-light" asp-action="Index">Back to Products</a>
+        </aside>
+    </div>
+</div>

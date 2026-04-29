@@ -1,0 +1,35 @@
+@model OrderSummaryViewModel
+
+@{
+    ViewData["Title"] = "Order confirmation";
+}
+
+<div class="page-section">
+    <section class="section-card">
+        <div class="section-header">
+            <p class="section-label">Complete</p>
+            <h1>Order confirmed</h1>
+            <p class="section-text">Use this page as the final confirmation layout after checkout is implemented.</p>
+        </div>
+
+        <div class="details-list">
+            <div>
+                <span>Order number</span>
+                <strong>@Model.OrderNumber</strong>
+            </div>
+            <div>
+                <span>Items</span>
+                <strong>@Model.ItemCount</strong>
+            </div>
+            <div>
+                <span>Total</span>
+                <strong>@Model.Total.ToString("C")</strong>
+            </div>
+        </div>
+
+        <div class="action-row mt-3">
+            <a class="btn btn-primary" asp-controller="Products" asp-action="Index">Back to products</a>
+            <a class="btn btn-outline-secondary" asp-controller="Home" asp-action="Index">Home</a>
+        </div>
+    </section>
+</div>
