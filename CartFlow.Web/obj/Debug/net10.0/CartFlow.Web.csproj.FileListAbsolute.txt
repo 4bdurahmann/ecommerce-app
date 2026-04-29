@@ -455,4 +455,4 @@ E:\ecommerce-app\CartFlow.Web\obj\Debug\net10.0\refint\CartFlow.Web.dll
 E:\ecommerce-app\CartFlow.Web\obj\Debug\net10.0\CartFlow.Web.pdb
 E:\ecommerce-app\CartFlow.Web\obj\Debug\net10.0\CartFlow.Web.genruntimeconfig.cache
 E:\ecommerce-app\CartFlow.Web\obj\Debug\net10.0\ref\CartFlow.Web.dll
-E:\ecommerce-app\CartFlow.Web\obj\Debug\net10.0\compressed\bt3g6nc1xv-{0}-85ig4uzcnn-85ig4uzcnn.gz
+E:\ecommerce-app\CartFlow.Web\obj\Debug\net10.0\compressed\bt3g6nc1xv-{0}-2ofblgdcof-2ofblgdcof.gz

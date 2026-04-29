@@ -338,6 +338,70 @@ body {
   font-weight: 700;
 }
 
+/* Category menu styles */
+.category-menu ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.category-menu .dropdown {
+  position: relative;
+}
+
+.category-menu .dropdown-toggle {
+  cursor: pointer;
+  color: var(--text);
+  padding: 0.45rem 0.7rem;
+}
+
+.category-menu .dropdown-toggle:hover,
+.category-menu .dropdown-toggle:focus {
+  color: var(--primary);
+}
+
+.category-menu .dropdown-menu {
+  min-width: 420px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 0.6rem;
+  padding: 0.85rem;
+  margin-top: 0.45rem;
+}
+
+.category-menu .dropdown-menu .row {
+  gap: 0.6rem;
+}
+
+.category-menu h6 {
+  margin: 0 0 0.25rem 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.category-menu p {
+  margin: 0 0 0.5rem 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.category-menu a.text-decoration-none {
+  color: var(--text);
+  font-size: 0.9rem;
+}
+
+.category-menu a.text-decoration-none:hover {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+/* Make dropdown appear on hover for desktop */
+@media (min-width: 992px) {
+  .category-menu .dropdown:hover > .dropdown-menu {
+    display: block;
+  }
+}
+
 @media (max-width: 767.98px) {
   .landing-hero,
   .section-header--row,
