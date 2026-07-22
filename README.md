@@ -165,11 +165,11 @@ The application seeds the database automatically on first launch with:
 
 Use the following test card for payments:
 
-| Field         | Value                  |
-|---------------|------------------------|
-| Card Number   | `4242 4242 4242 4242` |
-| Expiry        | Any future date        |
-| CVC           | Any 3 digits           |
+| Field       | Value                 |
+| ----------- | --------------------- |
+| Card Number | `4242 4242 4242 4242` |
+| Expiry      | Any future date       |
+| CVC         | Any 3 digits          |
 
 ---
 
