@@ -11,7 +11,7 @@ namespace CartFlow.Web.Controllers
     using CartFlow.Web.Extensions;
     using Microsoft.AspNetCore.Authentication;
 
-    public class AccountController(IAccountService accountService, ICartService cartService, IEmailService emailService) : Controller
+    public class AccountController(IAccountService accountService, ICartService cartService) : Controller
     {
         public IActionResult SignIn()
         {

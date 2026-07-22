@@ -54,6 +54,8 @@ namespace CartFlow.Web.Controllers
 
                 var qty = (quantity.HasValue && quantity.Value > 0) ? quantity.Value : 1;
 
+                ViewBag.ProductId = productId.Value;
+                ViewBag.Quantity = qty;
                 ViewBag.CartItems = new List<CartItemViewModel>
                 {
                     new CartItemViewModel
@@ -99,7 +101,9 @@ namespace CartFlow.Web.Controllers
             {
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                Email = user.Email
+                Email = user.Email,
+                ProductId = ViewBag.ProductId as int?,
+                Quantity = ViewBag.Quantity as int? ?? 1
             };
 
             ViewBag.StripePublishableKey = _configuration["StripeKeys:PublishableKey"];
@@ -120,32 +124,57 @@ namespace CartFlow.Web.Controllers
 
             if (!ModelState.IsValid)
             {
+                await PopulateCartItemsForPost(model);
                 return View(model);
             }
 
-            var cart = await _context.Carts
-                .Include(c => c.CartItems)
-                    .ThenInclude(ci => ci.Product)
-                .FirstOrDefaultAsync(c => c.UserId == userId);
+            List<(Product Product, int Quantity, decimal UnitPrice)> checkoutItems;
+            var qty = model.Quantity > 0 ? model.Quantity : 1;
 
-            if (cart == null || !cart.CartItems.Any())
+            if (model.ProductId.HasValue)
             {
-                return RedirectToAction("Index", "Cart");
-            }
-
-            foreach (var item in cart.CartItems)
-            {
-                if (item.Product.StockQuantity < item.Quantity)
+                var prod = await _context.Products.Include(p => p.ProductImages).FirstOrDefaultAsync(p => p.Id == model.ProductId.Value);
+                if (prod == null)
                 {
-                    ModelState.AddModelError("", $"Sorry, the product '{item.Product.Name}' does not have enough stock. Available: {item.Product.StockQuantity}");
+                    return NotFound();
+                }
+                if (prod.StockQuantity < qty)
+                {
+                    ModelState.AddModelError("", $"Sorry, the product '{prod.Name}' does not have enough stock. Available: {prod.StockQuantity}");
+                    await PopulateCartItemsForPost(model);
                     return View(model);
                 }
+                checkoutItems = new() { (prod, qty, prod.UnitPrice) };
+            }
+            else
+            {
+                var cart = await _context.Carts
+                    .Include(c => c.CartItems)
+                        .ThenInclude(ci => ci.Product)
+                    .FirstOrDefaultAsync(c => c.UserId == userId);
+
+                if (cart == null || !cart.CartItems.Any())
+                {
+                    return RedirectToAction("Index", "Cart");
+                }
+
+                foreach (var item in cart.CartItems)
+                {
+                    if (item.Product.StockQuantity < item.Quantity)
+                    {
+                        ModelState.AddModelError("", $"Sorry, the product '{item.Product.Name}' does not have enough stock. Available: {item.Product.StockQuantity}");
+                        await PopulateCartItemsForPost(model);
+                        return View(model);
+                    }
+                }
+
+                checkoutItems = cart.CartItems.Select(ci => (ci.Product, ci.Quantity, ci.UnitPrice)).ToList();
             }
 
-            decimal subtotal = cart.CartItems.Sum(item => item.Quantity * item.UnitPrice);
+            decimal subtotal = checkoutItems.Sum(item => item.Quantity * item.UnitPrice);
             decimal shipping = 50.00m;
             decimal totalPrice = subtotal + shipping;
-            int totalQuantity = cart.CartItems.Sum(item => item.Quantity);
+            int totalQuantity = checkoutItems.Sum(item => item.Quantity);
 
             PaymentMethod paymentMethod = model.PaymentMethod == "CreditCard" ? PaymentMethod.Credit : PaymentMethod.Cash;
 
@@ -156,6 +185,7 @@ namespace CartFlow.Web.Controllers
                 if (string.IsNullOrEmpty(model.PaymentMethodId))
                 {
                     ModelState.AddModelError("", "Credit card information is required.");
+                    await PopulateCartItemsForPost(model);
                     return View(model);
                 }
 
@@ -164,6 +194,7 @@ namespace CartFlow.Web.Controllers
                 if (!paymentResult.Success)
                 {
                     ModelState.AddModelError("", $"Payment failed: {paymentResult.ErrorMessage}");
+                    await PopulateCartItemsForPost(model);
                     return View(model);
                 }
 
@@ -189,25 +220,87 @@ namespace CartFlow.Web.Controllers
             _context.Orders.Add(order);
             await _context.SaveChangesAsync();
 
-            foreach (var item in cart.CartItems)
+            foreach (var (prod, itemQty, price) in checkoutItems)
             {
                 var orderItem = new OrderItem
                 {
                     OrderId = order.Id,
-                    ProductId = item.ProductId,
-                    Quantity = item.Quantity,
-                    Price = item.UnitPrice
+                    ProductId = prod.Id,
+                    Quantity = itemQty,
+                    Price = price
                 };
                 _context.OrderItems.Add(orderItem);
 
-                item.Product.StockQuantity -= item.Quantity;
+                prod.StockQuantity -= itemQty;
             }
 
-            _context.CartItems.RemoveRange(cart.CartItems);
+            if (!model.ProductId.HasValue)
+            {
+                var cart = await _context.Carts.FirstOrDefaultAsync(c => c.UserId == userId);
+                if (cart != null)
+                {
+                    _context.CartItems.RemoveRange(
+                        _context.CartItems.Where(ci => ci.CartId == cart.Id));
+                }
+            }
 
             await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Confirmation), new { id = order.Id });
+        }
+
+        private async Task PopulateCartItemsForPost(CheckoutViewModel model)
+        {
+            if (model.ProductId.HasValue)
+            {
+                var prod = await _context.Products.Include(p => p.ProductImages)
+                    .FirstOrDefaultAsync(p => p.Id == model.ProductId.Value);
+                if (prod != null)
+                {
+                    var qty = model.Quantity > 0 ? model.Quantity : 1;
+                    ViewBag.CartItems = new List<CartItemViewModel>
+                    {
+                        new()
+                        {
+                            Id = 0,
+                            ProductId = prod.Id,
+                            ProductName = prod.Name,
+                            UnitPrice = prod.UnitPrice,
+                            Quantity = qty,
+                            ImageUrl = prod.ProductImages?.FirstOrDefault(pi => pi.IsPrimary)?.Image
+                                       ?? prod.ProductImages?.FirstOrDefault()?.Image
+                                       ?? string.Empty
+                        }
+                    };
+                }
+            }
+            else
+            {
+                var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                if (int.TryParse(userIdString, out var userId))
+                {
+                    var cart = await _context.Carts
+                        .Include(c => c.CartItems)
+                            .ThenInclude(ci => ci.Product)
+                                .ThenInclude(p => p.ProductImages)
+                        .FirstOrDefaultAsync(c => c.UserId == userId);
+
+                    if (cart != null)
+                    {
+                        ViewBag.CartItems = cart.CartItems.Select(ci => new CartItemViewModel
+                        {
+                            Id = ci.Id,
+                            ProductId = ci.ProductId,
+                            ProductName = ci.Product.Name,
+                            UnitPrice = ci.UnitPrice,
+                            Quantity = ci.Quantity,
+                            ImageUrl = ci.Product.ProductImages?.FirstOrDefault(pi => pi.IsPrimary)?.Image
+                                       ?? ci.Product.ProductImages?.FirstOrDefault()?.Image
+                                       ?? string.Empty
+                        }).ToList();
+                    }
+                }
+            }
         }
 
         [HttpGet]

@@ -41,7 +41,6 @@ public class AccountService(AppDbContext context) : IAccountService
         return await context.Users.FindAsync(id);
     }
 
-    // after
     public async Task<User?> UpdateProfileAsync(int id, string firstName, string lastName, string email, string phone)
     {
         var user = await context.Users.FindAsync(id);

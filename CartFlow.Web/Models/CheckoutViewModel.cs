@@ -21,5 +21,8 @@ namespace CartFlow.Web.Models
         public string PaymentMethod { get; set; } = "Cash";
 
         public string? PaymentMethodId { get; set; }
+
+        public int? ProductId { get; set; }
+        public int Quantity { get; set; } = 1;
     }
 }
