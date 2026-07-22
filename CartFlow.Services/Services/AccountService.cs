@@ -55,4 +55,58 @@ public class AccountService(AppDbContext context) : IAccountService
         return user;
     }
 
+    public async Task<User> FindOrCreateExternalUserAsync(string email, string firstName, string lastName)
+    {
+        var existing = await context.Users.FirstOrDefaultAsync(u => u.Email.ToLower() == email.ToLower());
+        if (existing is not null) return existing;
+
+        var user = new User
+        {
+            FirstName = string.IsNullOrWhiteSpace(firstName) ? "Google" : firstName,
+            LastName = string.IsNullOrWhiteSpace(lastName) ? "User" : lastName,
+            Email = email,
+            // External-login users don't set a local password. Store a random,
+            // unguessable placeholder so it can never be used to sign in
+            // through the normal email/password form.
+            Password = Guid.NewGuid().ToString("N"),
+            UserRole = Role.CUSTOMER
+        };
+
+        context.Users.Add(user);
+        await context.SaveChangesAsync();
+        return user;
+    }
+
+    public async Task<string?> GeneratePasswordResetTokenAsync(string email)
+    {
+        var user = await context.Users.FirstOrDefaultAsync(u => u.Email.ToLower() == email.ToLower());
+        if (user is null) return null;
+
+        // URL-safe random token
+        var token = Convert.ToHexString(System.Security.Cryptography.RandomNumberGenerator.GetBytes(32));
+
+        user.PasswordResetToken = token;
+        user.PasswordResetTokenExpiry = DateTime.UtcNow.AddHours(1);
+
+        await context.SaveChangesAsync();
+        return token;
+    }
+
+    public async Task<bool> ResetPasswordAsync(string email, string token, string newPassword)
+    {
+        var user = await context.Users.FirstOrDefaultAsync(u =>
+            u.Email.ToLower() == email.ToLower() &&
+            u.PasswordResetToken == token);
+
+        if (user is null) return false;
+        if (user.PasswordResetTokenExpiry is null || user.PasswordResetTokenExpiry < DateTime.UtcNow) return false;
+
+        user.Password = newPassword;
+        user.PasswordResetToken = null;
+        user.PasswordResetTokenExpiry = null;
+
+        await context.SaveChangesAsync();
+        return true;
+    }
+
 }

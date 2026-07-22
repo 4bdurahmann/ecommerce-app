@@ -18,8 +18,10 @@ builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddScoped<ICheckoutService, CheckoutService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 // Register Stripe payment service
-builder.Services.AddScoped<CartFlow.Services.Interfaces.IPaymentService, CartFlow.Services.Services.StripePaymentService>();
-builder.Services.AddScoped<CartFlow.Services.Interfaces.IReviewService, CartFlow.Services.Services.ReviewService>();
+builder.Services.AddScoped<IPaymentService, StripePaymentService>();
+builder.Services.AddScoped<IReviewService, ReviewService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
+
 
 
 
@@ -29,7 +31,17 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.LoginPath = "/Account/SignIn";
         options.LogoutPath = "/Account/Logout";
         options.AccessDeniedPath = "/Account/SignIn";
+    })
+
+    .AddCookie("External")
+    .AddGoogle(options =>
+    {
+        options.ClientId = builder.Configuration["Authentication:Google:ClientId"] ?? string.Empty;
+        options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"] ?? string.Empty;
+        options.CallbackPath = "/signin-google";
+        options.SignInScheme = "External";
     });
+
 
 // Add session support for anonymous shopping cart storage
 builder.Services.AddSession();
